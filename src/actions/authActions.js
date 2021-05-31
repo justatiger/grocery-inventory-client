@@ -1,6 +1,10 @@
 import axios from "axios";
 import { AUTH, LOGOUT } from "../constants/userConstants";
 
+const API = axios.create({
+  baseURL: "https://tiger-grocery-inventory.herokuapp.com/",
+});
+
 export const signin = (form) => async (dispatch) => {
   try {
     const config = {
@@ -9,7 +13,7 @@ export const signin = (form) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("/auth/login", form, config);
+    const { data } = await API.post("/auth/login", form, config);
 
     dispatch({
       type: AUTH,
@@ -28,7 +32,7 @@ export const signup = (form) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("/auth", form, config);
+    const { data } = await API.post("/auth", form, config);
 
     dispatch({
       type: AUTH,
