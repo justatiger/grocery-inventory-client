@@ -5,22 +5,36 @@ import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import Icon from "../components/Icon";
 import {
-  Container,
   Avatar,
   Button,
   CssBaseline,
   TextField,
   Grid,
   Typography,
+  Paper,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import Header from "../components/Header";
 import { signin, signup } from "../actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+    padding: "0px:",
+    margin: "0px",
+  },
+  image: {
+    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -31,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   googleButton: {
     marginBottom: theme.spacing(2),
-    backgroundColor: "red",
+    backgroundColor: "#fd2f00",
   },
 }));
 
@@ -116,10 +130,10 @@ const Auth = () => {
   };
 
   return (
-    <>
-      <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -276,8 +290,8 @@ const Auth = () => {
             </Grid>
           </form>
         </div>
-      </Container>
-    </>
+      </Grid>
+    </Grid>
   );
 };
 
