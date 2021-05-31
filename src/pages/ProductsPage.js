@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../actions/productActions";
 import Header from "../components/Header";
 import ProductForm from "../components/ProductForm";
@@ -22,9 +22,12 @@ const ProductsPage = () => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   return (
     <div>
-      <Header />
+      <Header userInfo={userInfo} />
       <ProductForm
         open={open}
         handleClose={handleClose}
