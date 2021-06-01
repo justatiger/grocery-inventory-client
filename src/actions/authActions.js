@@ -1,10 +1,12 @@
 import axios from "axios";
 import { AUTH, LOGOUT } from "../constants/userConstants";
 
+// Needed to proxy the correct link, otherwise unauthorised.
 const API = axios.create({
   baseURL: "https://tiger-grocery-inventory.herokuapp.com/",
 });
 
+// Sign in action
 export const signin = (form) => async (dispatch) => {
   try {
     const config = {
@@ -24,6 +26,7 @@ export const signin = (form) => async (dispatch) => {
   }
 };
 
+// Sign up action
 export const signup = (form) => async (dispatch) => {
   try {
     const config = {
@@ -43,6 +46,7 @@ export const signup = (form) => async (dispatch) => {
   }
 };
 
+// Log out action
 export const logout = (form) => async (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.removeItem("userInfo");

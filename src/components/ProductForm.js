@@ -1,3 +1,4 @@
+/* This file displays the pop up FORM */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
@@ -14,16 +15,19 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { createProduct, updateProduct } from "../actions/productActions";
 
+// Custom styles
 const useStyles = makeStyles((theme) => ({
   file: {
     marginTop: "15px",
   },
 }));
 
+// Pass in the currentId to decide if user is adding new data or update an existing data
 const ProductForm = ({ currentId, setCurrentId, open, handleClose }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  // Initial object with empty fields
   const initialState = {
     name: "",
     description: "",
@@ -32,21 +36,26 @@ const ProductForm = ({ currentId, setCurrentId, open, handleClose }) => {
     imageUrl: "",
   };
 
+  // Initialize product data with empty fields
   const [productData, setProductData] = useState(initialState);
 
+  // Retrieve if there's a matching product id
   const productDetails = useSelector((state) =>
     currentId ? state.products.find((p) => p._id === currentId) : null
   );
 
+  // Trigger once to set product details if there's data retrieved
   useEffect(() => {
     if (productDetails) setProductData(productDetails);
   }, [productDetails]);
 
+  // Resets data to empty string again
   const clearData = () => {
     setProductData(initialState);
     setCurrentId(0);
   };
 
+  // handles form on submit
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClose();
@@ -57,21 +66,25 @@ const ProductForm = ({ currentId, setCurrentId, open, handleClose }) => {
       dispatch(updateProduct(currentId, productData));
     }
 
+    // Resets form
     clearData();
   };
 
   return (
+    // Pop up Form
     <Dialog
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
+      {/* Form Title */}
       <DialogTitle id="form-dialog-title">Product Details</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {`${currentId === 0 ? "add" : "update"} product details.`}
         </DialogContentText>
 
+        {/* Input fields */}
         <TextField
           autoFocus
           id="name"
@@ -128,6 +141,7 @@ const ProductForm = ({ currentId, setCurrentId, open, handleClose }) => {
           />
         </div>
       </DialogContent>
+      {/* Buttons */}
       <DialogActions>
         <Button color="secondary" onClick={handleClose}>
           Close

@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { deleteProduct, deleteProducts } from "../actions/productActions";
 
+/* This long list is for updating the missing icons in the table */
 import { forwardRef } from "react";
-
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
@@ -50,7 +50,9 @@ const tableIcons = {
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
+/* End of missing icons updates in the table */
 
+// Custom styles
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Product Table Function
 const ProductTable = ({ handleClickOpen, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -82,6 +85,7 @@ const ProductTable = ({ handleClickOpen, setCurrentId }) => {
 
   return (
     <>
+      {/* Add Product Button */}
       <div style={{ textAlign: "right" }}>
         <Button
           variant="contained"
@@ -94,7 +98,10 @@ const ProductTable = ({ handleClickOpen, setCurrentId }) => {
           Add Product
         </Button>
       </div>
+
+      {/* Table */}
       <Card>
+        {/* Using Material Table */}
         <MaterialTable
           icons={tableIcons}
           title="Product Details"
@@ -141,7 +148,9 @@ const ProductTable = ({ handleClickOpen, setCurrentId }) => {
                 ),
             },
           ]}
+          /* data to populate the table */
           data={products}
+          /* Action definition for selecting multiple rows */
           actions={[
             {
               tooltip: "Remove All Selected Contacts",
@@ -149,6 +158,7 @@ const ProductTable = ({ handleClickOpen, setCurrentId }) => {
               onClick: (evt, data) => delProducts(data.map((a) => a._id)),
             },
           ]}
+          /* Additional options to define the table */
           options={{
             actionsColumnIndex: -1,
             exportButton: true,

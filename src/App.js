@@ -6,7 +6,9 @@ import ProductsPage from "./pages/ProductsPage";
 const App = () => {
   return (
     <Router>
+      {/* Sign in page */}
       <Route path="/" exact component={Auth} />
+      {/* Product page */}
       <Route path="/products" exact component={ProductsPage} />
     </Router>
   );

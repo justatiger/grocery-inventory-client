@@ -1,3 +1,4 @@
+/* This file defines the Login Page */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,6 +18,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { signin, signup } from "../actions/authActions";
 
+// Custom styles
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -56,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Initial empty login details
 const initialState = {
   firstName: "",
   lastName: "",
@@ -64,6 +67,7 @@ const initialState = {
   confirmPassword: "",
 };
 
+// Default Function
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -75,12 +79,14 @@ const Auth = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  // Call everytime  user is signing in and goes to products page
   useEffect(() => {
     if (userInfo) {
       history.push("/products");
     }
   }, [history, userInfo]);
 
+  // Google Login successful
   const googleSuccess = async (res) => {
     console.log(res);
     const result = res?.profileObj;
@@ -99,14 +105,18 @@ const Auth = () => {
     }
   };
 
+  // Google Login Fail
   const googleFaliure = () => {
     console.log("Google Sign In Unsuccessful. Try Again Later");
   };
 
+  // Sign up form is submitted
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check if user is signing up
     if (isSignUp) {
+      // Check if all fields are not empty and password don't match
       if (
         !authForm.firstName ||
         !authForm.lastName ||
@@ -132,19 +142,26 @@ const Auth = () => {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      {/* Left side displays a random image */}
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      {/* Right side displays Sign in form */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
+          {/* Sign in Icon */}
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
+          {/* Switch text between sign in or sign up */}
           <Typography component="h1" variant="h5">
             {`${isSignUp ? "Sign up" : "Sign In"}`}
           </Typography>
+
+          {/* Form */}
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               {isSignUp && (
                 <>
+                  {/* Input field for first name */}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="fname"
@@ -163,6 +180,7 @@ const Auth = () => {
                       }
                     />
                   </Grid>
+                  {/* Input field for last name */}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="lname"
@@ -184,6 +202,7 @@ const Auth = () => {
                 </>
               )}
 
+              {/* Input field for email */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -201,6 +220,7 @@ const Auth = () => {
                   }
                 />
               </Grid>
+              {/* Input field for password */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -219,6 +239,7 @@ const Auth = () => {
                   }
                 />
               </Grid>
+              {/* Input field for confirm password */}
               {isSignUp && (
                 <Grid item xs={12}>
                   <TextField
@@ -240,6 +261,7 @@ const Auth = () => {
                 </Grid>
               )}
             </Grid>
+            {/* Button to submit Sign up Form */}
             <Button
               type="submit"
               fullWidth
@@ -271,7 +293,7 @@ const Auth = () => {
               onFaliure={googleFaliure}
               cookiePolicy="single_host_origin"
             />
-
+            {/* Switch between signing in or signing up */}
             <Grid container justify="flex-end">
               <Grid item>
                 <Link
